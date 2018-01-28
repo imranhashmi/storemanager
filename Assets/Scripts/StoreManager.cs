@@ -95,10 +95,11 @@ public class StoreManager : MonoBehaviour {
 
 	public void OnLoginSubmit()
 	{	
-		disableAllPanels ();
 
 		if (username.text.ToLower () == "admin" && password.text.ToLower () == "admin") {
-			
+
+			disableAllPanels ();
+
 			TopPanel.SetActive(true);
 			Home.SetActive (true);
 			topTitle.text = "Home";
