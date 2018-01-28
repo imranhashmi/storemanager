@@ -1,2 +1,6 @@
 # storemanager
-Can we use Unity for non-game apps?
+Can we use Unity for non-game mobile apps?
+
+* This project relies heavily on UI Builder asset for now which is not included. Which will be removed once the funtionality is developed.
+
+Trying to make a non-game mobile app template.
