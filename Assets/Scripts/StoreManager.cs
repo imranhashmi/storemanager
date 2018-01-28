@@ -15,29 +15,64 @@ public class StoreManager : MonoBehaviour {
 	public GameObject Charts;
 	public GameObject Orders;
 
+	public Text topTitle;
 	public InputField username;
 	public InputField password;
+
+	public ToggleGroup sidebarToggles;
+	public Toggle[] tg;
 
 	void disableAllPanels ()
 	{
 		Splash.SetActive (false);
 		Login.SetActive (false);
-		TopPanel.SetActive (false);
-		Sidebar.SetActive (false);
+
 		Home.SetActive (false);
 		Tasks.SetActive (false);
 		Team.SetActive (false);
 		Charts.SetActive (false);
-		Orders.SetActive (false);
-
-		sidebarOpened = false;
+		Orders.SetActive (false); 
 	}
 
 	void Awake(){
 
 		disableAllPanels ();
-
+		TopPanel.SetActive (false);
+		Sidebar.SetActive (false);
+		sidebarOpened = false;
+		sidebarToggles.SetAllTogglesOff ();
 	}
+
+	public void ShowHome()
+	{
+		Home.SetActive ( tg[0].isOn );
+		topTitle.text = "Home";
+	}
+
+	public void ShowTasks()
+	{
+		Tasks.SetActive (tg[1].isOn);
+		topTitle.text = "Tasks";
+	}
+
+	public void ShowTeam()
+	{ 
+		Team.SetActive (tg[2].isOn);
+		topTitle.text = "Team";
+	}
+
+	public void ShowCharts()
+	{ 
+		Charts.SetActive (tg[3].isOn);
+		topTitle.text = "Stats";
+	}
+
+	public void ShowOrders()
+	{ 
+		Orders.SetActive (tg[4].isOn);
+		topTitle.text = "Orders";
+	}
+
 
 	// Use this for initialization
 	void Start () {
@@ -50,7 +85,7 @@ public class StoreManager : MonoBehaviour {
 	IEnumerator OpenSplash()
 	{	
 
-		yield return new WaitForSeconds (2f);
+		yield return new WaitForSeconds (1f);
 
 		Splash.SetActive (false);
 		Login.SetActive (true);
@@ -60,13 +95,14 @@ public class StoreManager : MonoBehaviour {
 
 	public void OnLoginSubmit()
 	{	
+		disableAllPanels ();
 
 		if (username.text.ToLower () == "admin" && password.text.ToLower () == "admin") {
-
-			Login.SetActive (false);
+			
 			TopPanel.SetActive(true);
-
 			Home.SetActive (true);
+			topTitle.text = "Home";
+			tg [0].isOn = true;
 
 		} else {
 
@@ -77,6 +113,10 @@ public class StoreManager : MonoBehaviour {
 	public void OnLogout()
 	{	
 		disableAllPanels ();
+		TopPanel.SetActive (false);
+		Sidebar.SetActive (false);
+		sidebarOpened = false;
+		sidebarToggles.SetAllTogglesOff ();
 
 		username.text = "";
 		password.text = "";
