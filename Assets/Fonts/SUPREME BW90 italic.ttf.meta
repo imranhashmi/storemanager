@@ -1,0 +1,26 @@
+fileFormatVersion: 2
+guid: de4bd16a5019e4249b29d7f5028209e3
+timeCreated: 1516939954
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: SUPREME BW90
+  fontNames:
+  - SUPREME BW90
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 2e652358304bd1e47b7d927b79939730, type: 3}
+  - {fileID: 12800000, guid: 9b54150d5a6e2da449b5b4c2dd7a6a99, type: 3}
+  - {fileID: 12800000, guid: 6e3efe3fba079994f98c87cd86d23ebf, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

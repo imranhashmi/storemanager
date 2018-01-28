@@ -4,7 +4,7 @@
 /[Bb]uild/
 /[Bb]uilds/
 /Assets/AssetStoreTools*
-
+/Assets/UI - BUILDER
 # Visual Studio 2015 cache directory
 /.vs/
 
@@ -32,3 +32,4 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+Assets/UI - BUILDER.meta
