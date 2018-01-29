@@ -19,29 +19,32 @@ public class StoreManager : MonoBehaviour {
 	public InputField username;
 	public InputField password;
 
+	public GameObject newtaskButton;
 	public ToggleGroup sidebarToggles;
 	public Toggle[] tg;
 
 	void disableAllPanels ()
-	{
-		Splash.SetActive (false);
-		Login.SetActive (false);
-
+	{ 
 		Home.SetActive (false);
 		Tasks.SetActive (false);
 		Team.SetActive (false);
 		Stats.SetActive (false);
-		Settings.SetActive (false); 
+		Settings.SetActive (false);  
 	}
 
 	void Awake(){
 
 		disableAllPanels ();
+
+		Splash.SetActive (false);
+		Login.SetActive (false);
 		TopPanel.SetActive (false);
 		Sidebar.SetActive (false);
 		sidebarOpened = false;
-		sidebarToggles.SetAllTogglesOff ();
-	}
+		//sidebarToggles.SetAllTogglesOff ();
+		newtaskButton.SetActive (false);
+
+ 	}
 
 	public void ShowHome()
 	{
@@ -53,6 +56,7 @@ public class StoreManager : MonoBehaviour {
 	{
 		Tasks.SetActive (tg[1].isOn);
 		topTitle.text = "Tasks";
+		newtaskButton.SetActive (tg [1].isOn);
 	}
 
 	public void ShowTeam()
@@ -78,11 +82,11 @@ public class StoreManager : MonoBehaviour {
 	void Start () {
 		
 		Splash.SetActive (true);
-		StartCoroutine( OpenSplash() );
+		StartCoroutine( OpenLogin() );
 
 	} 
 
-	IEnumerator OpenSplash()
+	IEnumerator OpenLogin()
 	{	
 		yield return new WaitForSeconds (1f);
 
@@ -112,11 +116,13 @@ public class StoreManager : MonoBehaviour {
 
 	public void OnLogout()
 	{	
-		disableAllPanels ();
+		//disableAllPanels ();
 		TopPanel.SetActive (false);
 		Sidebar.SetActive (false);
 		sidebarOpened = false;
-		sidebarToggles.SetAllTogglesOff ();
+
+		foreach (Toggle t in tg)
+			t.isOn = false;
 
 		username.text = "";
 		password.text = "";
@@ -131,6 +137,13 @@ public class StoreManager : MonoBehaviour {
 		Sidebar.SetActive (sidebarOpened);
 	}
 
+
+	public void MakeNewTask()
+	{
+
+
+
+	}
 	// Update is called once per frame
 	void Update () {
 			
