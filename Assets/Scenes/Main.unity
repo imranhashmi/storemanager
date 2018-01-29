@@ -1757,7 +1757,7 @@ GameObject:
   - component: {fileID: 185141090}
   - component: {fileID: 185141089}
   m_Layer: 5
-  m_Name: Button - Orders
+  m_Name: Button - Settings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1827,7 +1827,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2097455025}
-        m_MethodName: ShowOrders
+        m_MethodName: ShowSettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1853,7 +1853,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.42284125, g: 0.19999999, b: 1, a: 1}
+  m_Color: {r: 0.49264705, g: 0.49264705, b: 0.49264705, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -5092,7 +5092,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 545763846}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2097455025}
+        m_MethodName: ToggleSidebar
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &545763846
@@ -6151,7 +6162,7 @@ GameObject:
   - component: {fileID: 713062898}
   - component: {fileID: 713062897}
   m_Layer: 5
-  m_Name: Panel - Orders
+  m_Name: Panel - Settings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6281,7 +6292,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 268f3c8c797b44d4485475f62ee3a943, type: 3}
+  m_Sprite: {fileID: 21300000, guid: eef5b61f8d124417b96f2d6476be33db, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -7615,7 +7626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9098039, g: 0.73965985, b: 0.33894655, a: 1}
+  m_Color: {r: 0.2575625, g: 0.27880833, b: 0.30980393, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -10529,7 +10540,7 @@ GameObject:
   - component: {fileID: 1207585162}
   - component: {fileID: 1207585161}
   m_Layer: 5
-  m_Name: Button - Charts
+  m_Name: Button - Stats
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10599,7 +10610,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2097455025}
-        m_MethodName: ShowCharts
+        m_MethodName: ShowStats
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10625,7 +10636,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.16862746, g: 0.7607843, b: 0.43137255, a: 1}
+  m_Color: {r: 0.2575625, g: 0.27880833, b: 0.30980393, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -13802,7 +13813,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3019608, g: 0.68235296, b: 0.9529412, a: 1}
+  m_Color: {r: 0.49264705, g: 0.49264705, b: 0.49264705, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -16883,7 +16894,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8039216, g: 0.3647059, b: 0.3647059, a: 1}
+  m_Color: {r: 0.49264705, g: 0.49264705, b: 0.49264705, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -17684,8 +17695,8 @@ MonoBehaviour:
   Home: {fileID: 234246021}
   Tasks: {fileID: 1962479685}
   Team: {fileID: 407548650}
-  Charts: {fileID: 2133338600}
-  Orders: {fileID: 713062895}
+  Stats: {fileID: 2133338600}
+  Settings: {fileID: 713062895}
   topTitle: {fileID: 191215165}
   username: {fileID: 1103271946}
   password: {fileID: 304255646}
@@ -18000,7 +18011,7 @@ GameObject:
   - component: {fileID: 2133338603}
   - component: {fileID: 2133338602}
   m_Layer: 5
-  m_Name: Panel - Charts
+  m_Name: Panel - Stats
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

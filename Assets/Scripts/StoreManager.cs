@@ -12,8 +12,8 @@ public class StoreManager : MonoBehaviour {
 	public GameObject Home;
 	public GameObject Tasks;
 	public GameObject Team;
-	public GameObject Charts;
-	public GameObject Orders;
+	public GameObject Stats;
+	public GameObject Settings;
 
 	public Text topTitle;
 	public InputField username;
@@ -30,8 +30,8 @@ public class StoreManager : MonoBehaviour {
 		Home.SetActive (false);
 		Tasks.SetActive (false);
 		Team.SetActive (false);
-		Charts.SetActive (false);
-		Orders.SetActive (false); 
+		Stats.SetActive (false);
+		Settings.SetActive (false); 
 	}
 
 	void Awake(){
@@ -61,16 +61,16 @@ public class StoreManager : MonoBehaviour {
 		topTitle.text = "Team";
 	}
 
-	public void ShowCharts()
+	public void ShowStats()
 	{ 
-		Charts.SetActive (tg[3].isOn);
+		Stats.SetActive (tg[3].isOn);
 		topTitle.text = "Stats";
 	}
 
-	public void ShowOrders()
+	public void ShowSettings()
 	{ 
-		Orders.SetActive (tg[4].isOn);
-		topTitle.text = "Orders";
+		Settings.SetActive (tg[4].isOn);
+		topTitle.text = "Settings";
 	}
 
 
@@ -78,13 +78,12 @@ public class StoreManager : MonoBehaviour {
 	void Start () {
 		
 		Splash.SetActive (true);
-
 		StartCoroutine( OpenSplash() );
+
 	} 
 
 	IEnumerator OpenSplash()
 	{	
-
 		yield return new WaitForSeconds (1f);
 
 		Splash.SetActive (false);
@@ -95,7 +94,6 @@ public class StoreManager : MonoBehaviour {
 
 	public void OnLoginSubmit()
 	{	
-
 		if (username.text.ToLower () == "admin" && password.text.ToLower () == "admin") {
 
 			disableAllPanels ();
@@ -107,6 +105,7 @@ public class StoreManager : MonoBehaviour {
 
 		} else {
 
+			// Show a popup message here
 			Debug.Log ("Wrong Use\rname/Password !!!");
 		} 
   	}
