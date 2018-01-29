@@ -20,8 +20,13 @@ public class StoreManager : MonoBehaviour {
 	public InputField password;
 
 	public GameObject newtaskButton;
+	public GameObject removetaskButton;
 	public ToggleGroup sidebarToggles;
 	public Toggle[] tg;
+
+
+	public static StoreManager instance;
+	public List<TaskManager.Task> allTasks = new List<TaskManager.Task>();
 
 	void disableAllPanels ()
 	{ 
@@ -34,6 +39,8 @@ public class StoreManager : MonoBehaviour {
 
 	void Awake(){
 
+		instance = this;
+
 		disableAllPanels ();
 
 		Splash.SetActive (false);
@@ -41,40 +48,84 @@ public class StoreManager : MonoBehaviour {
 		TopPanel.SetActive (false);
 		Sidebar.SetActive (false);
 		sidebarOpened = false;
-		//sidebarToggles.SetAllTogglesOff ();
-		newtaskButton.SetActive (false);
-
+ 		newtaskButton.SetActive (false);
+		removetaskButton.SetActive (false);
  	}
 
 	public void ShowHome()
 	{
+		if( tg[0].isOn )
+			ToggleSidebar ();
+
 		Home.SetActive ( tg[0].isOn );
-		topTitle.text = "Home";
+		topTitle.text = "Home"; 
+
+		if ( taskForm.gameObject.activeSelf)
+			taskForm.gameObject.SetActive (false);
+
+		newtaskButton.SetActive (false);
+		removetaskButton.SetActive (false);
 	}
 
 	public void ShowTasks()
 	{
+		if( tg[1].isOn )
+			ToggleSidebar ();
+
 		Tasks.SetActive (tg[1].isOn);
 		topTitle.text = "Tasks";
-		newtaskButton.SetActive (tg [1].isOn);
+		if (allTasks.Count == 0) {
+			ShowTaskForm (); 
+		}
+		else {
+			newtaskButton.SetActive (tg [1].isOn);
+			removetaskButton.SetActive (false);
+		}
 	}
 
 	public void ShowTeam()
 	{ 
+		if( tg[2].isOn )
+			ToggleSidebar ();
+
 		Team.SetActive (tg[2].isOn);
 		topTitle.text = "Team";
+
+		if ( taskForm.gameObject.activeSelf)
+			taskForm.gameObject.SetActive (false);
+
+		newtaskButton.SetActive (false);
+		removetaskButton.SetActive (false);
 	}
 
 	public void ShowStats()
 	{ 
+		if( tg[3].isOn )
+			ToggleSidebar ();
+
 		Stats.SetActive (tg[3].isOn);
 		topTitle.text = "Stats";
+
+		if ( taskForm.gameObject.activeSelf)
+			taskForm.gameObject.SetActive (false);
+
+		newtaskButton.SetActive (false);
+		removetaskButton.SetActive (false);
 	}
 
 	public void ShowSettings()
 	{ 
+		if( tg[4].isOn )
+			ToggleSidebar ();
+
 		Settings.SetActive (tg[4].isOn);
 		topTitle.text = "Settings";
+
+		if ( taskForm.gameObject.activeSelf)
+			taskForm.gameObject.SetActive (false);
+
+		newtaskButton.SetActive (false);
+		removetaskButton.SetActive (false);
 	}
 
 
@@ -105,7 +156,10 @@ public class StoreManager : MonoBehaviour {
 			TopPanel.SetActive(true);
 			Home.SetActive (true);
 			topTitle.text = "Home";
-			tg [0].isOn = true;
+			//tg [0].isOn = true;
+
+			if ( taskForm.gameObject.activeSelf)
+				taskForm.gameObject.SetActive (false);
 
 		} else {
 
@@ -116,8 +170,7 @@ public class StoreManager : MonoBehaviour {
 
 	public void OnLogout()
 	{	
-		//disableAllPanels ();
-		TopPanel.SetActive (false);
+ 		TopPanel.SetActive (false);
 		Sidebar.SetActive (false);
 		sidebarOpened = false;
 
@@ -137,12 +190,57 @@ public class StoreManager : MonoBehaviour {
 		Sidebar.SetActive (sidebarOpened);
 	}
 
+	public Transform content;
+	public GameObject taskPrefab;
+	public TaskForm taskForm;
 
-	public void MakeNewTask()
+
+	public void DeleteTask()
+	{
+		if (taskForm.gameObject.activeSelf) {
+			taskForm.gameObject.SetActive (false);
+			newtaskButton.SetActive (true);
+			removetaskButton.SetActive (false);
+		}
+		else {
+			// Delete any seleted task from list.
+		}
+	}
+
+	public void ShowTaskForm()
+	{
+		taskForm.gameObject.SetActive (true);
+		newtaskButton.SetActive (false);
+		removetaskButton.SetActive (true);
+ 	}
+
+	void makeNewTaskPanel(TaskManager.Task task)
+	{
+		GameObject go = (GameObject)Instantiate (taskPrefab);
+		go.transform.SetParent (taskPrefab.transform.parent);
+		go.SetActive (true);
+		go.GetComponent<TaskItem> ().Setup (task);
+
+		updateTaskContentRect ();
+	}
+
+	void updateTaskContentRect()
+	{
+		RectTransform t = content.GetComponent<RectTransform>();
+		float contentSizeY = (content.childCount - 1) * taskPrefab.GetComponent<RectTransform> ().sizeDelta.y;
+		t.sizeDelta = new Vector2(t.sizeDelta.x, contentSizeY);
+	}
+
+	public void AddTask( string date, string title, string comments )
 	{
 
+		TaskManager.Task task = new TaskManager.Task (){ date = date, title = title, description = comments };
+		allTasks.Add (task);
+		makeNewTaskPanel (task);
 
-
+ 		taskForm.gameObject.SetActive (false);
+		newtaskButton.SetActive (true);
+		removetaskButton.SetActive (false);
 	}
 	// Update is called once per frame
 	void Update () {
