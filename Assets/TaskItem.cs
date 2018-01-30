@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class TaskItem : MonoBehaviour {
 
+	public Toggle toggle;
 	public Image bookmark;	
 	public Text date;
 	public Text title;
@@ -28,7 +29,7 @@ public class TaskItem : MonoBehaviour {
 		};
 
 	static int colorIndex = 0;
-	TaskManager.Task task;
+ 
 	public void Setup(TaskManager.Task t )
 	{
 			
@@ -39,8 +40,7 @@ public class TaskItem : MonoBehaviour {
 		
 		bookmark.color = allColors [colorIndex]; 
 
-		task = t;
-		date.text = t.date;
+ 		date.text = t.date;
 		title.text = t.title;
 		comments.text = t.description;
 	}

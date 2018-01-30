@@ -7051,7 +7051,18 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2097455025}
+        m_MethodName: TaskSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_IsOn: 0
@@ -10478,6 +10489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02d336cb628e70c489a34bef3d9522e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toggle: {fileID: 973864784}
   bookmark: {fileID: 81747663}
   date: {fileID: 147310451}
   title: {fileID: 1989198237}
@@ -14576,6 +14588,7 @@ MonoBehaviour:
   - {fileID: 1694610871}
   - {fileID: 1207585161}
   - {fileID: 185141089}
+  allTasks: []
   content: {fileID: 417091336}
   taskPrefab: {fileID: 1550043005}
   taskForm: {fileID: 1633598785}

@@ -26,7 +26,7 @@ public class StoreManager : MonoBehaviour {
 
 
 	public static StoreManager instance;
-	public List<TaskManager.Task> allTasks = new List<TaskManager.Task>();
+	public List<TaskItem> allTasks = new List<TaskItem>();
 
 	void disableAllPanels ()
 	{ 
@@ -79,8 +79,11 @@ public class StoreManager : MonoBehaviour {
 		}
 		else {
 			newtaskButton.SetActive (tg [1].isOn);
-			removetaskButton.SetActive (false);
-		}
+			removetaskButton.SetActive (false); 
+			foreach (TaskItem t in allTasks) {
+				t.toggle.isOn = false;
+			}
+ 		}
 	}
 
 	public void ShowTeam()
@@ -204,6 +207,18 @@ public class StoreManager : MonoBehaviour {
 		}
 		else {
 			// Delete any seleted task from list.
+			List<TaskItem> toRemove = new List<TaskItem>();
+			foreach (TaskItem t in allTasks) {
+				if (t.toggle.isOn)
+					toRemove.Add (t);
+			}
+
+			foreach (TaskItem tt in toRemove) {
+				allTasks.Remove (tt);
+				DestroyImmediate (tt.gameObject);
+			}
+
+			TaskSelected ();
 		}
 	}
 
@@ -213,16 +228,7 @@ public class StoreManager : MonoBehaviour {
 		newtaskButton.SetActive (false);
 		removetaskButton.SetActive (true);
  	}
-
-	void makeNewTaskPanel(TaskManager.Task task)
-	{
-		GameObject go = (GameObject)Instantiate (taskPrefab);
-		go.transform.SetParent (taskPrefab.transform.parent);
-		go.SetActive (true);
-		go.GetComponent<TaskItem> ().Setup (task);
-
-		updateTaskContentRect ();
-	}
+	 
 
 	void updateTaskContentRect()
 	{
@@ -235,13 +241,44 @@ public class StoreManager : MonoBehaviour {
 	{
 
 		TaskManager.Task task = new TaskManager.Task (){ date = date, title = title, description = comments };
-		allTasks.Add (task);
-		makeNewTaskPanel (task);
+
+		GameObject go = (GameObject)Instantiate (taskPrefab);
+		go.transform.SetParent (taskPrefab.transform.parent);
+		go.SetActive (true);
+		TaskItem taskItem = go.GetComponent<TaskItem> ();
+		taskItem.Setup (task);
+
+		if (allTasks == null) allTasks = new List<TaskItem> ();
+		allTasks.Add (taskItem);
+
+		updateTaskContentRect ();
 
  		taskForm.gameObject.SetActive (false);
 		newtaskButton.SetActive (true);
 		removetaskButton.SetActive (false);
 	}
+
+	public void TaskSelected()
+	{
+		int howManySelected = 0;
+		foreach (TaskItem t in allTasks) {
+			
+			if (t.toggle.isOn)
+				howManySelected++;
+
+		}	
+
+		if (howManySelected > 0) {
+			newtaskButton.SetActive (false);
+			removetaskButton.SetActive (true);
+		} else {
+
+			newtaskButton.SetActive (true);
+			removetaskButton.SetActive (false);
+
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
 			
