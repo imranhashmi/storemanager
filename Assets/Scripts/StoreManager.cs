@@ -52,6 +52,67 @@ public class StoreManager : MonoBehaviour {
 		removetaskButton.SetActive (false);
  	}
 
+	// Use this for initialization
+	void Start () {
+
+		Splash.SetActive (true);
+		StartCoroutine( OpenLogin() );
+
+	} 
+
+	IEnumerator OpenLogin()
+	{	
+		yield return new WaitForSeconds (1f);
+
+		Splash.SetActive (false);
+		Login.SetActive (true);
+
+		yield break;
+	}
+
+	public void OnLoginSubmit()
+	{	
+		if (username.text.ToLower () == "admin" && password.text.ToLower () == "admin") {
+
+			disableAllPanels ();
+
+			TopPanel.SetActive(true);
+			Home.SetActive (true);
+			topTitle.text = "Home";
+			//tg [0].isOn = true;
+
+			if ( taskForm.gameObject.activeSelf)
+				taskForm.gameObject.SetActive (false);
+
+		} else {
+
+			// Show a popup message here
+			Debug.Log ("Wrong Use\rname/Password !!!");
+		} 
+	}
+
+	public void OnLogout()
+	{	
+		TopPanel.SetActive (false);
+		Sidebar.SetActive (false);
+		sidebarOpened = false;
+
+		foreach (Toggle t in tg)
+			t.isOn = false;
+
+		username.text = "";
+		password.text = "";
+
+		Login.SetActive (true);
+	}
+
+	bool sidebarOpened = false;
+	public void ToggleSidebar()
+	{
+		sidebarOpened = !sidebarOpened;
+		Sidebar.SetActive (sidebarOpened);
+	}
+
 	public void ShowHome()
 	{
 		if( tg[0].isOn )
@@ -129,106 +190,18 @@ public class StoreManager : MonoBehaviour {
 
 		newtaskButton.SetActive (false);
 		removetaskButton.SetActive (false);
-	}
-
-
-	// Use this for initialization
-	void Start () {
-		
-		Splash.SetActive (true);
-		StartCoroutine( OpenLogin() );
-
-	} 
-
-	IEnumerator OpenLogin()
-	{	
-		yield return new WaitForSeconds (1f);
-
-		Splash.SetActive (false);
-		Login.SetActive (true);
-
-		yield break;
-	}
-
-	public void OnLoginSubmit()
-	{	
-		if (username.text.ToLower () == "admin" && password.text.ToLower () == "admin") {
-
-			disableAllPanels ();
-
-			TopPanel.SetActive(true);
-			Home.SetActive (true);
-			topTitle.text = "Home";
-			//tg [0].isOn = true;
-
-			if ( taskForm.gameObject.activeSelf)
-				taskForm.gameObject.SetActive (false);
-
-		} else {
-
-			// Show a popup message here
-			Debug.Log ("Wrong Use\rname/Password !!!");
-		} 
-  	}
-
-	public void OnLogout()
-	{	
- 		TopPanel.SetActive (false);
-		Sidebar.SetActive (false);
-		sidebarOpened = false;
-
-		foreach (Toggle t in tg)
-			t.isOn = false;
-
-		username.text = "";
-		password.text = "";
-
-		Login.SetActive (true);
- 	}
-
-	bool sidebarOpened = false;
-	public void ToggleSidebar()
-	{
-		sidebarOpened = !sidebarOpened;
-		Sidebar.SetActive (sidebarOpened);
-	}
-
-	public Transform content;
-	public GameObject taskPrefab;
-	public TaskForm taskForm;
-
-
-	public void DeleteTask()
-	{
-		if (taskForm.gameObject.activeSelf) {
-			taskForm.gameObject.SetActive (false);
-			newtaskButton.SetActive (true);
-			removetaskButton.SetActive (false);
-		}
-		else {
-			// Delete any seleted task from list.
-			List<TaskItem> toRemove = new List<TaskItem>();
-			foreach (TaskItem t in allTasks) {
-				if (t.toggle.isOn)
-					toRemove.Add (t);
-			}
-
-			foreach (TaskItem tt in toRemove) {
-				allTasks.Remove (tt);
-				DestroyImmediate (tt.gameObject);
-			}
-
-			TaskSelected ();
-		}
-	}
+	}	 
 
 	public void ShowTaskForm()
 	{
 		taskForm.gameObject.SetActive (true);
 		newtaskButton.SetActive (false);
 		removetaskButton.SetActive (true);
- 	}
-	 
+	}
+
+	public Transform content;
+	public GameObject taskPrefab;
+	public TaskForm taskForm;
 
 	void updateTaskContentRect()
 	{
@@ -253,10 +226,34 @@ public class StoreManager : MonoBehaviour {
 
 		updateTaskContentRect ();
 
- 		taskForm.gameObject.SetActive (false);
+		taskForm.gameObject.SetActive (false);
 		newtaskButton.SetActive (true);
 		removetaskButton.SetActive (false);
 	}
+
+	public void DeleteTask()
+	{
+		if (taskForm.gameObject.activeSelf) {
+			taskForm.gameObject.SetActive (false);
+			newtaskButton.SetActive (true);
+			removetaskButton.SetActive (false);
+		}
+		else {
+			// Delete any seleted task from list.
+			List<TaskItem> toRemove = new List<TaskItem>();
+			foreach (TaskItem t in allTasks) {
+				if (t.toggle.isOn)
+					toRemove.Add (t);
+			}
+
+			foreach (TaskItem tt in toRemove) {
+				allTasks.Remove (tt);
+				DestroyImmediate (tt.gameObject);
+			}
+
+			TaskSelected ();
+		}
+	} 
 
 	public void TaskSelected()
 	{
