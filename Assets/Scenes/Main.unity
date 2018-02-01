@@ -10460,7 +10460,7 @@ RectTransform:
   - {fileID: 553341735}
   - {fileID: 2043847644}
   m_Father: {fileID: 1102500163}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.8992084}
@@ -10902,7 +10902,7 @@ RectTransform:
   - {fileID: 384244589}
   - {fileID: 237706721}
   m_Father: {fileID: 1102500163}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.8992084}
@@ -12737,8 +12737,8 @@ RectTransform:
   - {fileID: 234246022}
   - {fileID: 2032359971}
   - {fileID: 1962479686}
-  - {fileID: 905339848}
   - {fileID: 856879901}
+  - {fileID: 905339848}
   - {fileID: 2133338601}
   - {fileID: 407548651}
   - {fileID: 2112909862}
@@ -22748,16 +22748,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 072f3ab71d79336449f2770367a14052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panelSplash: {fileID: 0}
-  panelLogin: {fileID: 0}
-  panelTop: {fileID: 0}
-  panelSidebar: {fileID: 0}
-  panelHome: {fileID: 0}
-  panelSurveys: {fileID: 0}
-  panelTasks: {fileID: 0}
-  panelStores: {fileID: 0}
-  panelManagers: {fileID: 0}
-  panelStats: {fileID: 0}
+  panelSplash: {fileID: 493509314}
+  panelLogin: {fileID: 1365148949}
+  panelTop: {fileID: 930204336}
+  panelSidebar: {fileID: 2112909861}
+  panelHome: {fileID: 234246021}
+  panelSurveys: {fileID: 2032359970}
+  panelTasks: {fileID: 1962479685}
+  panelStores: {fileID: 856879900}
+  panelManagers: {fileID: 905339847}
+  panelStats: {fileID: 2133338600}
   topTitle: {fileID: 191215165}
   username: {fileID: 1103271946}
   password: {fileID: 304255646}
