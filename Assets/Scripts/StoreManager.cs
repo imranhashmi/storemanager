@@ -5,15 +5,16 @@ using UnityEngine.UI;
 
 public class StoreManager : MonoBehaviour {
 
-	public GameObject Splash;
-	public GameObject Login;
-	public GameObject TopPanel;
-	public GameObject Sidebar;
-	public GameObject Home;
-	public GameObject Tasks;
-	public GameObject Team;
-	public GameObject Stats;
-	public GameObject Settings;
+	public GameObject panelSplash;
+	public GameObject panelLogin;
+	public GameObject panelTop;
+	public GameObject panelSidebar;
+	public GameObject panelHome;
+	public GameObject panelSurveys;
+	public GameObject panelTasks;
+	public GameObject panelStores;
+	public GameObject panelManagers;
+	public GameObject panelStats;
 
 	public Text topTitle;
 	public InputField username;
@@ -25,16 +26,22 @@ public class StoreManager : MonoBehaviour {
 	public Toggle[] tg;
 
 
-	public static StoreManager instance;
+	public static StoreManager instance;  
+
+	public List<SurveyItem> allSurveys = new List<SurveyItem>();
+	public List<StoreItem> allStores = new List<StoreItem>();
+	public List<ManagerItem> allManagers = new List<ManagerItem>();
+
 	public List<TaskItem> allTasks = new List<TaskItem>();
 
 	void disableAllPanels ()
 	{ 
-		Home.SetActive (false);
-		Tasks.SetActive (false);
-		Team.SetActive (false);
-		Stats.SetActive (false);
-		Settings.SetActive (false);  
+		panelHome.SetActive (false);
+		panelSurveys.SetActive (false);
+			panelTasks.SetActive (false);	//
+		panelStores.SetActive (false); 
+		panelManagers.SetActive (false); 
+		panelStats.SetActive (false);
 	}
 
 	void Awake(){
@@ -43,10 +50,10 @@ public class StoreManager : MonoBehaviour {
 
 		disableAllPanels ();
 
-		Splash.SetActive (false);
-		Login.SetActive (false);
-		TopPanel.SetActive (false);
-		Sidebar.SetActive (false);
+		panelSplash.SetActive (false);
+		panelLogin.SetActive (false);
+		panelTop.SetActive (false);
+		panelSidebar.SetActive (false);
 		sidebarOpened = false;
  		newtaskButton.SetActive (false);
 		removetaskButton.SetActive (false);
@@ -55,7 +62,7 @@ public class StoreManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		Splash.SetActive (true);
+		panelSplash.SetActive (true);
 		StartCoroutine( OpenLogin() );
 
 	} 
@@ -64,8 +71,8 @@ public class StoreManager : MonoBehaviour {
 	{	
 		yield return new WaitForSeconds (1f);
 
-		Splash.SetActive (false);
-		Login.SetActive (true);
+		panelSplash.SetActive (false);
+		panelLogin.SetActive (true);
 
 		yield break;
 	}
@@ -76,8 +83,8 @@ public class StoreManager : MonoBehaviour {
 
 			disableAllPanels ();
 
-			TopPanel.SetActive(true);
-			Home.SetActive (true);
+			panelTop.SetActive(true);
+			panelHome.SetActive (true);
 			topTitle.text = "Home";
 			//tg [0].isOn = true;
 
@@ -93,8 +100,8 @@ public class StoreManager : MonoBehaviour {
 
 	public void OnLogout()
 	{	
-		TopPanel.SetActive (false);
-		Sidebar.SetActive (false);
+		panelTop.SetActive (false);
+		panelSidebar.SetActive (false);
 		sidebarOpened = false;
 
 		foreach (Toggle t in tg)
@@ -103,14 +110,14 @@ public class StoreManager : MonoBehaviour {
 		username.text = "";
 		password.text = "";
 
-		Login.SetActive (true);
+		panelLogin.SetActive (true);
 	}
 
 	bool sidebarOpened = false;
 	public void ToggleSidebar()
 	{
 		sidebarOpened = !sidebarOpened;
-		Sidebar.SetActive (sidebarOpened);
+		panelSidebar.SetActive (sidebarOpened);
 	}
 
 	public void ShowHome()
@@ -118,7 +125,7 @@ public class StoreManager : MonoBehaviour {
 		if( tg[0].isOn )
 			ToggleSidebar ();
 
-		Home.SetActive ( tg[0].isOn );
+		panelHome.SetActive ( tg[0].isOn );
 		topTitle.text = "Home"; 
 
 		if ( taskForm.gameObject.activeSelf)
@@ -128,18 +135,38 @@ public class StoreManager : MonoBehaviour {
 		removetaskButton.SetActive (false);
 	}
 
-	public void ShowTasks()
+	public void ShowSurveys()
 	{
 		if( tg[1].isOn )
 			ToggleSidebar ();
 
-		Tasks.SetActive (tg[1].isOn);
+		panelSurveys.SetActive (tg[1].isOn);
+		topTitle.text = "Surveys";
+		if (allSurveys.Count == 0) {
+			ShowTaskForm (); 
+		}
+		else {
+			newtaskButton.SetActive (tg [1].isOn);
+			removetaskButton.SetActive (false); 
+			foreach (SurveyItem t in allSurveys) {
+				t.toggle.isOn = false;
+			}
+		}
+	}
+
+	// Child of Surveys
+	public void ShowTasks()
+	{
+		if( tg[0].isOn )
+			ToggleSidebar ();
+
+		panelTasks.SetActive (tg[0].isOn);
 		topTitle.text = "Tasks";
 		if (allTasks.Count == 0) {
 			ShowTaskForm (); 
 		}
 		else {
-			newtaskButton.SetActive (tg [1].isOn);
+			newtaskButton.SetActive (tg [0].isOn);
 			removetaskButton.SetActive (false); 
 			foreach (TaskItem t in allTasks) {
 				t.toggle.isOn = false;
@@ -147,27 +174,50 @@ public class StoreManager : MonoBehaviour {
  		}
 	}
 
-	public void ShowTeam()
+	public void ShowManagers()
 	{ 
 		if( tg[2].isOn )
 			ToggleSidebar ();
 
-		Team.SetActive (tg[2].isOn);
-		topTitle.text = "Team";
-
-		if ( taskForm.gameObject.activeSelf)
-			taskForm.gameObject.SetActive (false);
-
-		newtaskButton.SetActive (false);
-		removetaskButton.SetActive (false);
+		panelManagers.SetActive (tg[2].isOn);
+		topTitle.text = "Managers";
+		if (allManagers.Count == 0) {
+			ShowTaskForm (); 
+		}
+		else {
+			newtaskButton.SetActive (tg [2].isOn);
+			removetaskButton.SetActive (false); 
+			foreach (ManagerItem t in allManagers) {
+				t.toggle.isOn = false;
+			}
+		}
 	}
 
-	public void ShowStats()
+	public void ShowStores()
 	{ 
 		if( tg[3].isOn )
 			ToggleSidebar ();
 
-		Stats.SetActive (tg[3].isOn);
+		panelStores.SetActive (tg[3].isOn);
+		topTitle.text = "Stores";
+		if (allStores.Count == 0) {
+			ShowTaskForm (); 
+		}
+		else {
+			newtaskButton.SetActive (tg [3].isOn);
+			removetaskButton.SetActive (false); 
+			foreach (StoreItem t in allStores) {
+				t.toggle.isOn = false;
+			}
+		}
+	}
+
+	public void ShowStats()
+	{ 
+		if( tg[4].isOn )
+			ToggleSidebar ();
+
+		panelStats.SetActive (tg[4].isOn);
 		topTitle.text = "Stats";
 
 		if ( taskForm.gameObject.activeSelf)
@@ -175,22 +225,7 @@ public class StoreManager : MonoBehaviour {
 
 		newtaskButton.SetActive (false);
 		removetaskButton.SetActive (false);
-	}
-
-	public void ShowSettings()
-	{ 
-		if( tg[4].isOn )
-			ToggleSidebar ();
-
-		Settings.SetActive (tg[4].isOn);
-		topTitle.text = "Settings";
-
-		if ( taskForm.gameObject.activeSelf)
-			taskForm.gameObject.SetActive (false);
-
-		newtaskButton.SetActive (false);
-		removetaskButton.SetActive (false);
-	}	 
+	} 
 
 	public void ShowTaskForm()
 	{
@@ -213,7 +248,7 @@ public class StoreManager : MonoBehaviour {
 	public void AddTask( string date, string title, string comments )
 	{
 
-		TaskManager.Task task = new TaskManager.Task (){ date = date, title = title, description = comments };
+		Task task = new Task (){ date = date, title = title, description = comments };
 
 		GameObject go = (GameObject)Instantiate (taskPrefab);
 		go.transform.SetParent (taskPrefab.transform.parent);

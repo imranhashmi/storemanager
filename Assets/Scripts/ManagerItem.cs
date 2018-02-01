@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TaskItem : MonoBehaviour {
+public class ManagerItem : MonoBehaviour {
 
 	public Toggle toggle;
 	public Image bookmark;	
@@ -13,7 +13,7 @@ public class TaskItem : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+
 	}
 	static Color[] allColors = {
 		Color.black,
@@ -26,27 +26,27 @@ public class TaskItem : MonoBehaviour {
 		Color.red,
 		Color.white,
 		Color.yellow,
-		};
+	};
 
 	static int colorIndex = 0;
- 
-	public void Setup(Task t )
+
+	public void Setup(Manager t )
 	{
-			
+
 		if (colorIndex < allColors.Length-1)
 			colorIndex++;
 		else
 			colorIndex = 0;
-		
+
 		bookmark.color = allColors [colorIndex]; 
 
- 		date.text = t.date;
-		title.text = t.title;
-		comments.text = t.description;
+		date.text = t.id.ToString();
+		title.text = t.name;
+		comments.text = t.email;
 	}
 
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 }
