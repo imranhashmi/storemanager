@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TaskForm : MonoBehaviour {
+public class StoreForm : MonoBehaviour {
 
 	public InputField date;
 	public InputField title;
@@ -28,8 +28,8 @@ public class TaskForm : MonoBehaviour {
 
 	public void Submit()
 	{
-		if (TaskGui.instance != null)
-			TaskGui.instance.AddItem (date.text, title.text, comments.text);
+		if (StoreGui.instance != null)
+			StoreGui.instance.AddItem (date.text, title.text, comments.text);
  	}
 	// Update is called once per frame
 	void Update () {

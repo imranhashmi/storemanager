@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Manager : MonoBehaviour {
+public class Manager {
 
 	public int id;
-	public string name;
+	public string title;
 	public string discription;
 	public string nationality;
 	public string phone;

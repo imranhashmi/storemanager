@@ -41,7 +41,7 @@ public class StoreItem : MonoBehaviour {
 		bookmark.color = allColors [colorIndex]; 
 
 		date.text = t.manager;
-		title.text = t.name;
+		title.text = t.title;
 		comments.text = t.address;
 	}
 

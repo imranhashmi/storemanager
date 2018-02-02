@@ -2,20 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Store  {
+public class StatisticGui : MonoBehaviour {
 
-	public int id;
-	public string title;
-	public string address;
-	public string manager;
+	public static StatisticGui instance; 
+
+	void Awake()
+	{
+		instance = this;	
+	}
 
 	// Use this for initialization
 	void Start () {
-		
+
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		
-	}
+
+	} 
 }

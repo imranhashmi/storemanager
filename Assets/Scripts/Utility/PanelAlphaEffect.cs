@@ -7,7 +7,7 @@ public class PanelAlphaEffect : MonoBehaviour {
 	
 	public float Duration = 1;
 	public Graphic[] graphics;
-	public bool enabled ;
+	public new bool enabled ;
 	public bool Enabled {
 		get { return enabled;}
 		set {

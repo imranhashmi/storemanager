@@ -1,19 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StoreGui : MonoBehaviour {
 
 	public static StoreGui instance;
 
-	public GameObject scrollView;
-	public RectTransform contentRect;
+ 	public RectTransform contentRect;
 	public GameObject prefab;
-	public TaskForm form;
+	public StoreForm form;
+
+	public Button addButton;
+	public Button removeButton;
 
 	void Awake()
 	{
-		instance = this;	
+		instance = this;
+		addButton.gameObject.SetActive (false);
+		removeButton.gameObject.SetActive (false);
 	}
 
 	// Use this for initialization
@@ -26,69 +31,84 @@ public class StoreGui : MonoBehaviour {
 
 	}
 
-	void updateTaskContentRect()
+	void updateContentRect()
 	{
 		RectTransform t = contentRect.GetComponent<RectTransform>();
 		float contentSizeY = (contentRect.childCount - 1) * prefab.GetComponent<RectTransform> ().sizeDelta.y;
 		t.sizeDelta = new Vector2(t.sizeDelta.x, contentSizeY);
 	}
 
-	public void ShowTaskForm()
-	{
-		form.gameObject.SetActive (true);
-		//newtaskButton.SetActive (false);
-		//removetaskButton.SetActive (true);
+	public void Show()
+	{ 
+		if (AppController.instance.allStores.Count == 0) {
+			ShowForm (); 
+		}
+		else {
+			form.gameObject.SetActive (false);
+			addButton.gameObject.SetActive (true);
+			removeButton.gameObject.SetActive (false); 
+			foreach (StoreItem t in AppController.instance.allStores) {
+				t.toggle.isOn = false;
+			}
+		}
 	}
 
-	public void AddTask( string date, int id, Manager manager, Store store )
+	public void ShowForm()
+	{
+		form.gameObject.SetActive (true);
+		addButton.gameObject.SetActive (false);
+		removeButton.gameObject.SetActive (true);
+	}
+
+	public void AddItem(string date, string title, string comments)
 	{
 
-		Survey survey = new Survey (){ date = date, id = id, manager = manager, store = store };
+		Store store = new Store (){ title = title, address = comments };
 
 		GameObject go = (GameObject)Instantiate (prefab);
 		go.transform.SetParent (prefab.transform.parent);
 		go.SetActive (true);
-		SurveyItem item = go.GetComponent<SurveyItem> ();
-		item.Setup (survey);
+		StoreItem item = go.GetComponent<StoreItem> ();
+		item.Setup (store);
 
-		if ( StoreManager.instance.allSurveys != null )
-			StoreManager.instance.allSurveys.Add (item);
+		if ( AppController.instance.allStores != null )
+			AppController.instance.allStores.Add (item);
 
-		updateTaskContentRect ();
+		updateContentRect ();
 
 		form.gameObject.SetActive (false);
-		//newtaskButton.SetActive (true);
-		//removetaskButton.SetActive (false);
+		addButton.gameObject.SetActive (true);
+		removeButton.gameObject.SetActive (false);
 	}
 
-	public void DeleteTask()
+	public void DeleteItem()
 	{
 		if (form.gameObject.activeSelf) {
 			form.gameObject.SetActive (false);
-			//newtaskButton.SetActive (true);
-			//removetaskButton.SetActive (false);
+			addButton.gameObject.SetActive (true);
+			removeButton.gameObject.SetActive (false);
 		}
 		else {
-			// Delete any seleted task from list.
-			List<SurveyItem> toRemove = new List<SurveyItem>();
-			foreach (SurveyItem t in StoreManager.instance.allSurveys) {
+			// Delete any seleted item from list.
+			List<StoreItem> toRemove = new List<StoreItem>();
+			foreach (StoreItem t in AppController.instance.allStores) {
 				if (t.toggle.isOn)
 					toRemove.Add (t);
 			}
 
-			foreach (SurveyItem tt in toRemove) {
-				StoreManager.instance.allSurveys.Remove (tt);
+			foreach (StoreItem tt in toRemove) {
+				AppController.instance.allStores.Remove (tt);
 				DestroyImmediate (tt.gameObject);
 			}
 
-			TaskSelected ();
+			ItemSelected ();
 		}
 	} 
 
-	public void TaskSelected()
+	public void ItemSelected()
 	{
 		int howManySelected = 0;
-		foreach (SurveyItem t in StoreManager.instance.allSurveys) {
+		foreach (StoreItem t in AppController.instance.allStores) {
 
 			if (t.toggle.isOn)
 				howManySelected++;
@@ -96,13 +116,11 @@ public class StoreGui : MonoBehaviour {
 		}	
 
 		if (howManySelected > 0) {
-			//newtaskButton.SetActive (false);
-			//removetaskButton.SetActive (true);
+			addButton.gameObject.SetActive (false);
+			removeButton.gameObject.SetActive (true);
 		} else {
-
-			//newtaskButton.SetActive (true);
-			//removetaskButton.SetActive (false);
-
+			addButton.gameObject.SetActive (true);
+			removeButton.gameObject.SetActive (false);
 		}
 	}
 }

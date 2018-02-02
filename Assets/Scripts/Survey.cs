@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Survey : MonoBehaviour {
+public class Survey {
 
 	public int id;
+	public string title;
 	public string date;
 	public Store store;
 	public Manager manager;

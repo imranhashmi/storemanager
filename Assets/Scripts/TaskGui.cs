@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ManagerGui : MonoBehaviour {
+public class TaskGui : MonoBehaviour {
 
-	public static ManagerGui instance;
+	public static TaskGui instance;
 
  	public RectTransform contentRect;
 	public GameObject prefab;
-	public ManagerForm form;
+	public TaskForm form;
 
 	public Button addButton;
 	public Button removeButton;
 
 	void Awake()
 	{
-		instance = this;
+		instance = this;	
 		addButton.gameObject.SetActive (false);
 		removeButton.gameObject.SetActive (false);
 	}
@@ -40,14 +40,14 @@ public class ManagerGui : MonoBehaviour {
 
 	public void Show()
 	{ 
-		if (AppController.instance.allManagers.Count == 0) {
+		if (AppController.instance.allTasks.Count == 0) {
 			ShowForm (); 
 		}
 		else {
 			form.gameObject.SetActive (false);
 			addButton.gameObject.SetActive (true);
 			removeButton.gameObject.SetActive (false); 
-			foreach (ManagerItem t in AppController.instance.allManagers) {
+			foreach (TaskItem t in AppController.instance.allTasks) {
 				t.toggle.isOn = false;
 			}
 		}
@@ -60,19 +60,19 @@ public class ManagerGui : MonoBehaviour {
 		removeButton.gameObject.SetActive (true);
 	}
 
-	public void AddItem(string date, string title, string comments)
+	public void AddItem( string date, string title, string comments )
 	{
 
-		Manager manager = new Manager (){ title = title, discription = comments };
+		Task task = new Task (){ date = date, title = title, description = comments };
 
 		GameObject go = (GameObject)Instantiate (prefab);
 		go.transform.SetParent (prefab.transform.parent);
 		go.SetActive (true);
-		ManagerItem item = go.GetComponent<ManagerItem> ();
-		item.Setup (manager);
+		TaskItem item = go.GetComponent<TaskItem> ();
+		item.Setup (task);
 
-		if ( AppController.instance.allManagers != null )
-			AppController.instance.allManagers.Add (item);
+		if ( AppController.instance.allTasks != null )
+			AppController.instance.allTasks.Add (item);
 
 		updateContentRect ();
 
@@ -90,14 +90,14 @@ public class ManagerGui : MonoBehaviour {
 		}
 		else {
 			// Delete any seleted item from list.
-			List<ManagerItem> toRemove = new List<ManagerItem>();
-			foreach (ManagerItem t in AppController.instance.allManagers) {
+			List<TaskItem> toRemove = new List<TaskItem>();
+			foreach (TaskItem t in AppController.instance.allTasks) {
 				if (t.toggle.isOn)
 					toRemove.Add (t);
 			}
 
-			foreach (ManagerItem tt in toRemove) {
-				AppController.instance.allManagers.Remove (tt);
+			foreach (TaskItem tt in toRemove) {
+				AppController.instance.allTasks.Remove (tt);
 				DestroyImmediate (tt.gameObject);
 			}
 
@@ -108,7 +108,7 @@ public class ManagerGui : MonoBehaviour {
 	public void ItemSelected()
 	{
 		int howManySelected = 0;
-		foreach (ManagerItem t in AppController.instance.allManagers) {
+		foreach (TaskItem t in AppController.instance.allTasks) {
 
 			if (t.toggle.isOn)
 				howManySelected++;

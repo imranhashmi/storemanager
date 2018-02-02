@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class PanelFadeEffect : MonoBehaviour {
 	
 	public static float Duration = 0.5f;
-	public bool enabled ;
+	public new bool enabled ;
 	public bool Enabled {
 		get { return enabled;}
 		set {

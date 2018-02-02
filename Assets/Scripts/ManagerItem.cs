@@ -41,7 +41,7 @@ public class ManagerItem : MonoBehaviour {
 		bookmark.color = allColors [colorIndex]; 
 
 		date.text = t.id.ToString();
-		title.text = t.name;
+		title.text = t.title;
 		comments.text = t.email;
 	}
 

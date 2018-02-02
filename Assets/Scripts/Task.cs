@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Task : MonoBehaviour {
+public class Task {
 
 	public int id;
 	public string title;

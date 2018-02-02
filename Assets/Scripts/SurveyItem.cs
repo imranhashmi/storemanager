@@ -42,7 +42,7 @@ public class SurveyItem : MonoBehaviour {
 
 		date.text = t.date;
 		title.text = t.id.ToString();
-		comments.text = t.manager.name;
+		comments.text = "";//t.manager.title;
 	}
 
 	// Update is called once per frame
