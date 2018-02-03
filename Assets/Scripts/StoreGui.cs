@@ -75,7 +75,7 @@ public class StoreGui : MonoBehaviour {
 	void updateContentRect()
 	{
 		RectTransform t = contentRect.GetComponent<RectTransform>();
-		float contentSizeY = (contentRect.childCount - 1) * prefab.GetComponent<RectTransform> ().sizeDelta.y;
+		float contentSizeY = contentRect.childCount * prefab.GetComponent<RectTransform> ().sizeDelta.y;
 		t.sizeDelta = new Vector2(t.sizeDelta.x, contentSizeY);
 	}
 
