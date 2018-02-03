@@ -29,10 +29,12 @@ public class TaskItem : MonoBehaviour {
 		};
 
 	static int colorIndex = 0;
- 
+	public Task task = null;
+
 	public void Setup(Task t )
 	{
-			
+		task = t;
+
 		if (colorIndex < allColors.Length-1)
 			colorIndex++;
 		else
@@ -43,6 +45,11 @@ public class TaskItem : MonoBehaviour {
  		date.text = t.date;
 		title.text = t.title;
 		comments.text = t.description;
+	}
+
+	public void ConfirmSelected()
+	{
+		ManagerGui.instance.ItemSelected ();	
 	}
 
 	// Update is called once per frame

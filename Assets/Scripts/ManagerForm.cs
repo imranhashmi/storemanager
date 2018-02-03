@@ -31,6 +31,7 @@ public class ManagerForm : MonoBehaviour {
 		if (ManagerGui.instance != null)
 			ManagerGui.instance.AddItem (date.text, title.text, comments.text);
  	}
+
 	// Update is called once per frame
 	void Update () {
 		

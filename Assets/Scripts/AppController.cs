@@ -30,7 +30,7 @@ public class AppController : MonoBehaviour {
 	public List<Store> allStores = new List<Store>(	);
 	public List<Manager> allManagers = new List<Manager>();
 
-	public List<TaskItem> allTasks = new List<TaskItem>();
+	public List<Task> allTasks = new List<Task>();
 
 	void disableAllPanels ()
 	{ 
