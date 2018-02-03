@@ -150,7 +150,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &114115968742368238
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -258,6 +258,7 @@ MonoBehaviour:
     id: 0
     title: 
     date: 
+    comments: 
     store:
       id: 0
       title: 
@@ -266,7 +267,7 @@ MonoBehaviour:
     manager:
       id: 0
       title: 
-      discription: 
+      description: 
       nationality: 
       phone: 
       email: 

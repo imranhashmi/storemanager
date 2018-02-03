@@ -44,7 +44,7 @@ public class SurveyItem : MonoBehaviour {
 
 		date.text = t.date;
 		title.text = t.title;
-		comments.text = "";//t.manager.title;
+		comments.text = t.comments;
 	} 
 
 	public void ConfirmSelected()

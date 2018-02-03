@@ -57,7 +57,12 @@ public class ManagerGui : MonoBehaviour {
 			GameObject go = (GameObject)Instantiate (prefab);
 			go.transform.SetParent (contentRect.transform);
 			go.name = "Manager " + contentRect.childCount.ToString ();
+			go.transform.localScale = new Vector3 (1f, 1f, 1f);
 			go.SetActive (true);
+
+			if (s.title.IsNullOrEmpty ())
+				s.title = go.name;
+			
 			ManagerItem item = go.GetComponent<ManagerItem> ();
 			item.Setup (s); 
 
@@ -83,12 +88,17 @@ public class ManagerGui : MonoBehaviour {
 
 	public void AddItem(string date, string title, string comments)
 	{
-		Manager manager = new Manager (){ title = title, discription = comments };
+		Manager manager = new Manager (){ phone = date, title = title, description = comments };
 
 		GameObject go = (GameObject)Instantiate (prefab);
 		go.transform.SetParent (contentRect.transform);
 		go.name = "Manager " + contentRect.childCount.ToString ();
+		go.transform.localScale = new Vector3 (1f, 1f, 1f);
 		go.SetActive (true);
+
+		if (manager.title.IsNullOrEmpty ())
+			manager.title = go.name;
+
 		ManagerItem item = go.GetComponent<ManagerItem> ();
 		item.Setup (manager);
 

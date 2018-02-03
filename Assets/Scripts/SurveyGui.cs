@@ -57,7 +57,12 @@ public class SurveyGui : MonoBehaviour {
 			GameObject go = (GameObject)Instantiate (prefab);
 			go.transform.SetParent (contentRect.transform);
 			go.name = "Survey " + contentRect.childCount.ToString ();
+			go.transform.localScale = new Vector3 (1f, 1f, 1f);
 			go.SetActive (true);
+
+			if (s.title.IsNullOrEmpty ())
+				s.title = go.name;
+			
 			SurveyItem item = go.GetComponent<SurveyItem> ();
 			item.Setup (s); 
 
@@ -83,12 +88,17 @@ public class SurveyGui : MonoBehaviour {
 
 	public void AddItem( string date, string title, string comments )
 	{
-		Survey survey = new Survey (){ date = date, title = title, manager = new Manager(), store = new Store() };
+		Survey survey = new Survey (){ date = date, title = title, comments = comments, manager = new Manager(), store = new Store() };
 
 		GameObject go = (GameObject)Instantiate (prefab);
 		go.transform.SetParent (contentRect.transform);
 		go.name = "Survey " + contentRect.childCount.ToString ();
+		go.transform.localScale = new Vector3 (1f, 1f, 1f);
 		go.SetActive (true);
+
+		if (survey.title.IsNullOrEmpty ())
+			survey.title = go.name;
+		
 		SurveyItem item = go.GetComponent<SurveyItem> ();
 		item.Setup (survey);
 

@@ -41,9 +41,9 @@ public class ManagerItem : MonoBehaviour {
 
 		bookmark.color = allColors [colorIndex]; 
 
-		date.text = t.id.ToString();
+		date.text = t.phone;
 		title.text = t.title;
-		comments.text = t.email;
+		comments.text = t.description;
 	}
 
 	public void ConfirmSelected()

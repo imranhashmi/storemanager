@@ -57,7 +57,12 @@ public class TaskGui : MonoBehaviour {
 			GameObject go = (GameObject)Instantiate (prefab);
 			go.transform.SetParent (contentRect.transform);
 			go.name = "Task " + contentRect.childCount.ToString ();
+			go.transform.localScale = new Vector3 (1f, 1f, 1f);
 			go.SetActive (true);
+
+			if (s.title.IsNullOrEmpty ())
+				s.title = go.name;
+			
 			TaskItem item = go.GetComponent<TaskItem> ();
 			item.Setup (s); 
 
@@ -88,7 +93,12 @@ public class TaskGui : MonoBehaviour {
 		GameObject go = (GameObject)Instantiate (prefab);
 		go.transform.SetParent (contentRect.transform);
 		go.name = "Task " + contentRect.childCount.ToString ();
+		go.transform.localScale = new Vector3 (1f, 1f, 1f);
 		go.SetActive (true);
+
+		if (task.title.IsNullOrEmpty ())
+			task.title = go.name;
+		
 		TaskItem item = go.GetComponent<TaskItem> ();
 		item.Setup (task);
 

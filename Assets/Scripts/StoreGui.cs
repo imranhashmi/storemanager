@@ -57,7 +57,12 @@ public class StoreGui : MonoBehaviour {
 			GameObject go = (GameObject)Instantiate (prefab);
 			go.transform.SetParent (contentRect.transform);
 			go.name = "Store " + contentRect.childCount.ToString ();
+			go.transform.localScale = new Vector3 (1f, 1f, 1f);
 			go.SetActive (true);
+
+			if (s.title.IsNullOrEmpty ())
+				s.title = go.name;
+			
 			StoreItem item = go.GetComponent<StoreItem> ();
 			item.Setup (s); 
 
@@ -83,13 +88,17 @@ public class StoreGui : MonoBehaviour {
 
 	public void AddItem(string date, string title, string comments)
 	{
-
-		Store store = new Store (){ title = title, address = comments };
+		Store store = new Store (){  manager = date, title = title, address = comments };
 
 		GameObject go = (GameObject)Instantiate (prefab);
 		go.transform.SetParent (contentRect.transform);
 		go.name = "Store " + contentRect.childCount.ToString ();
+		go.transform.localScale = new Vector3 (1f, 1f, 1f);
 		go.SetActive (true);
+
+		if (store.title.IsNullOrEmpty ())
+			store.title = go.name;
+		
 		StoreItem item = go.GetComponent<StoreItem> ();
 		item.Setup (store);
 

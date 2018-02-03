@@ -8,6 +8,7 @@ public class Survey {
 	public int id;
 	public string title;
 	public string date;
+	public string comments;
 	public Store store;
 	public Manager manager;
 	public List<Task> allTasks = new List<Task>();

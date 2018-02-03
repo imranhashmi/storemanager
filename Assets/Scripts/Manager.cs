@@ -7,7 +7,7 @@ public class Manager {
 
 	public int id;
 	public string title;
-	public string discription;
+	public string description;
 	public string nationality;
 	public string phone;
 	public string email;

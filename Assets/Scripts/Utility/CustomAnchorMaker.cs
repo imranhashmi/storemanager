@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+#if UNITY_EDITOR
 using UnityEditor;
 
-public class CustomAnchorMaker {
-	
-	
-	
+public class CustomAnchorMaker {	
 	[MenuItem("CONTEXT/RectTransform/Set Custom Anchor")]
     static void SetCustomAnchor (MenuCommand command) {
         RectTransform trans = (RectTransform)command.context;
@@ -13,3 +11,4 @@ public class CustomAnchorMaker {
 		trans.SetCustomAnchor();
     }
 }
+#endif
