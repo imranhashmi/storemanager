@@ -46,6 +46,8 @@ public class AppController : MonoBehaviour {
 
 		instance = this;
 
+		PanelFadeEffect.Duration = 0.1f;
+
 		disableAllPanels ();
 
 		panelSplash.SetActive (false);
@@ -107,11 +109,11 @@ public class AppController : MonoBehaviour {
 		panelLogin.SetActive (true);
 	}
 
-	bool sidebarOpened = false;
+ 	bool sidebarOpened = false;
 	public void ToggleSidebar()
 	{
 		sidebarOpened = !sidebarOpened;
-		panelSidebar.SetActive (sidebarOpened);
+		panelSidebar.SetFadeEnable (sidebarOpened); 
 	}
 
 	public void ShowHome()
