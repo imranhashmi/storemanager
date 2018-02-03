@@ -29,10 +29,11 @@ public class ManagerItem : MonoBehaviour {
 	};
 
 	static int colorIndex = 0;
+	public Manager manager = null;
 
 	public void Setup(Manager t )
 	{
-
+		manager = t;
 		if (colorIndex < allColors.Length-1)
 			colorIndex++;
 		else
@@ -43,6 +44,11 @@ public class ManagerItem : MonoBehaviour {
 		date.text = t.id.ToString();
 		title.text = t.title;
 		comments.text = t.email;
+	}
+
+	public void ConfirmSelected()
+	{
+		ManagerGui.instance.ItemSelected ();	
 	}
 
 	// Update is called once per frame

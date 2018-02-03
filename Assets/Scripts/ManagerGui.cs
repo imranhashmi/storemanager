@@ -29,14 +29,7 @@ public class ManagerGui : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-	}
-
-	void updateContentRect()
-	{
-		RectTransform t = contentRect.GetComponent<RectTransform>();
-		float contentSizeY = (contentRect.childCount - 1) * prefab.GetComponent<RectTransform> ().sizeDelta.y;
-		t.sizeDelta = new Vector2(t.sizeDelta.x, contentSizeY);
-	}
+	}  
 
 	public void Show()
 	{ 
@@ -47,10 +40,38 @@ public class ManagerGui : MonoBehaviour {
 			form.gameObject.SetActive (false);
 			addButton.gameObject.SetActive (true);
 			removeButton.gameObject.SetActive (false); 
-			foreach (ManagerItem t in AppController.instance.allManagers) {
-				t.toggle.isOn = false;
-			}
+			Reset ();
+			StartCoroutine ("fillList");
 		}
+	}
+
+	public void Reset()
+	{
+		StopCoroutine ("fillList");
+		contentRect.transform.ClearChildren ();
+	}
+
+	IEnumerator fillList()
+	{		
+		foreach (Manager s in AppController.instance.allManagers) { 
+			GameObject go = (GameObject)Instantiate (prefab);
+			go.transform.SetParent (contentRect.transform);
+			go.name = "Manager " + contentRect.childCount.ToString ();
+			go.SetActive (true);
+			ManagerItem item = go.GetComponent<ManagerItem> ();
+			item.Setup (s); 
+
+			updateContentRect ();
+
+			yield return new WaitForEndOfFrame ();
+		}
+	}
+
+	void updateContentRect()
+	{
+		RectTransform t = contentRect.GetComponent<RectTransform>();
+		float contentSizeY = (contentRect.childCount - 1) * prefab.GetComponent<RectTransform> ().sizeDelta.y;
+		t.sizeDelta = new Vector2(t.sizeDelta.x, contentSizeY);
 	}
 
 	public void ShowForm()
@@ -62,17 +83,17 @@ public class ManagerGui : MonoBehaviour {
 
 	public void AddItem(string date, string title, string comments)
 	{
-
 		Manager manager = new Manager (){ title = title, discription = comments };
 
 		GameObject go = (GameObject)Instantiate (prefab);
-		go.transform.SetParent (prefab.transform.parent);
+		go.transform.SetParent (contentRect.transform);
+		go.name = "Manager " + contentRect.childCount.ToString ();
 		go.SetActive (true);
 		ManagerItem item = go.GetComponent<ManagerItem> ();
 		item.Setup (manager);
 
 		if ( AppController.instance.allManagers != null )
-			AppController.instance.allManagers.Add (item);
+			AppController.instance.allManagers.Add (manager);
 
 		updateContentRect ();
 
@@ -91,25 +112,26 @@ public class ManagerGui : MonoBehaviour {
 		else {
 			// Delete any seleted item from list.
 			List<ManagerItem> toRemove = new List<ManagerItem>();
-			foreach (ManagerItem t in AppController.instance.allManagers) {
+			for (int i = 0; i < contentRect.childCount; i++) {
+				ManagerItem t = contentRect.GetChild (i).GetComponent<ManagerItem> ();
 				if (t.toggle.isOn)
 					toRemove.Add (t);
 			}
 
 			foreach (ManagerItem tt in toRemove) {
-				AppController.instance.allManagers.Remove (tt);
+				AppController.instance.allManagers.Remove (tt.manager);
 				DestroyImmediate (tt.gameObject);
 			}
 
-			ItemSelected ();
+			Show ();
 		}
 	} 
 
 	public void ItemSelected()
 	{
 		int howManySelected = 0;
-		foreach (ManagerItem t in AppController.instance.allManagers) {
-
+		for (int i = 0; i < contentRect.childCount; i++) {
+			ManagerItem t = contentRect.GetChild (i).GetComponent<ManagerItem> ();
 			if (t.toggle.isOn)
 				howManySelected++;
 
