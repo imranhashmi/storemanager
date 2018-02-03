@@ -29,14 +29,7 @@ public class StoreGui : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-	}
-
-	void updateContentRect()
-	{
-		RectTransform t = contentRect.GetComponent<RectTransform>();
-		float contentSizeY = (contentRect.childCount - 1) * prefab.GetComponent<RectTransform> ().sizeDelta.y;
-		t.sizeDelta = new Vector2(t.sizeDelta.x, contentSizeY);
-	}
+	} 
 
 	public void Show()
 	{ 
@@ -47,10 +40,38 @@ public class StoreGui : MonoBehaviour {
 			form.gameObject.SetActive (false);
 			addButton.gameObject.SetActive (true);
 			removeButton.gameObject.SetActive (false); 
-			foreach (StoreItem t in AppController.instance.allStores) {
-				t.toggle.isOn = false;
-			}
+			Reset ();
+			StartCoroutine ("fillList");
 		}
+	}
+
+	public void Reset()
+	{
+		StopCoroutine ("fillList");
+		contentRect.transform.ClearChildren ();
+	}
+
+	IEnumerator fillList()
+	{		
+		foreach (Store s in AppController.instance.allStores) { 
+			GameObject go = (GameObject)Instantiate (prefab);
+			go.transform.SetParent (contentRect.transform);
+			go.name = "Store " + contentRect.childCount.ToString ();
+			go.SetActive (true);
+			StoreItem item = go.GetComponent<StoreItem> ();
+			item.Setup (s); 
+
+			updateContentRect ();
+
+			yield return new WaitForEndOfFrame ();
+		}
+	}
+
+	void updateContentRect()
+	{
+		RectTransform t = contentRect.GetComponent<RectTransform>();
+		float contentSizeY = (contentRect.childCount - 1) * prefab.GetComponent<RectTransform> ().sizeDelta.y;
+		t.sizeDelta = new Vector2(t.sizeDelta.x, contentSizeY);
 	}
 
 	public void ShowForm()
@@ -66,13 +87,14 @@ public class StoreGui : MonoBehaviour {
 		Store store = new Store (){ title = title, address = comments };
 
 		GameObject go = (GameObject)Instantiate (prefab);
-		go.transform.SetParent (prefab.transform.parent);
+		go.transform.SetParent (contentRect.transform);
+		go.name = "Store " + contentRect.childCount.ToString ();
 		go.SetActive (true);
 		StoreItem item = go.GetComponent<StoreItem> ();
 		item.Setup (store);
 
 		if ( AppController.instance.allStores != null )
-			AppController.instance.allStores.Add (item);
+			AppController.instance.allStores.Add (store);
 
 		updateContentRect ();
 
@@ -91,25 +113,26 @@ public class StoreGui : MonoBehaviour {
 		else {
 			// Delete any seleted item from list.
 			List<StoreItem> toRemove = new List<StoreItem>();
-			foreach (StoreItem t in AppController.instance.allStores) {
+			for (int i = 0; i < contentRect.childCount; i++) {
+				StoreItem t = contentRect.GetChild (i).GetComponent<StoreItem> ();
 				if (t.toggle.isOn)
 					toRemove.Add (t);
 			}
 
 			foreach (StoreItem tt in toRemove) {
-				AppController.instance.allStores.Remove (tt);
+				AppController.instance.allStores.Remove (tt.store);
 				DestroyImmediate (tt.gameObject);
 			}
 
-			ItemSelected ();
+			Show ();
 		}
 	} 
 
 	public void ItemSelected()
 	{
 		int howManySelected = 0;
-		foreach (StoreItem t in AppController.instance.allStores) {
-
+		for (int i = 0; i < contentRect.childCount; i++) {
+			StoreItem t = contentRect.GetChild (i).GetComponent<StoreItem> ();
 			if (t.toggle.isOn)
 				howManySelected++;
 

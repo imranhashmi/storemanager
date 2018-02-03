@@ -29,9 +29,11 @@ public class StoreItem : MonoBehaviour {
 	};
 
 	static int colorIndex = 0;
+	public Store store = null;
 
 	public void Setup(Store t )
 	{
+		store = t;
 
 		if (colorIndex < allColors.Length-1)
 			colorIndex++;
@@ -43,6 +45,11 @@ public class StoreItem : MonoBehaviour {
 		date.text = t.manager;
 		title.text = t.title;
 		comments.text = t.address;
+	}
+
+	public void ConfirmSelected()
+	{
+		StoreGui.instance.ItemSelected ();	
 	}
 
 	// Update is called once per frame
