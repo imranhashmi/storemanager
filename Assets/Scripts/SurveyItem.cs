@@ -43,13 +43,18 @@ public class SurveyItem : MonoBehaviour {
 		bookmark.color = allColors [colorIndex]; 
 
 		date.text = t.date;
-		title.text = t.id.ToString();
+		title.text = t.title;
 		comments.text = "";//t.manager.title;
 	} 
 
 	public void ConfirmSelected()
 	{
 		SurveyGui.instance.ItemSelected ();	
+	}
+
+	public void Edit()
+	{
+		AppController.instance.ShowTasks (survey.allTasks);
 	}
 
 	// Update is called once per frame

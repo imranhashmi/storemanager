@@ -49,7 +49,7 @@ public class TaskItem : MonoBehaviour {
 
 	public void ConfirmSelected()
 	{
-		ManagerGui.instance.ItemSelected ();	
+		TaskGui.instance.ItemSelected ();	
 	}
 
 	// Update is called once per frame

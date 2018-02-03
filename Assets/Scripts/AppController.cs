@@ -125,26 +125,30 @@ public class AppController : MonoBehaviour {
 	}
 
 	public void ShowSurveys()
-	{
+	{		
 		panelSurveys.SetActive (tg[1].isOn);
+
+		panelTasks.SetActive ( false );
+		TaskGui.instance.Reset ();
 
 		if (tg [1].isOn) {
 			ToggleSidebar ();
 			SurveyGui.instance.Show (); 
-		} else
-			SurveyGui.instance.Reset ();
+		} else {
+			SurveyGui.instance.Reset ();		
+		}
 	}
 
 	// Child of Surveys
-	public void ShowTasks(List<Task> allTasks)
+	public void ShowTasks(List<Task> currentTasks)
 	{
-		panelTasks.SetActive (tg[1].isOn);
+		AppController.instance.allTasks = currentTasks;
 
-		if (tg [1].isOn) {
-			ToggleSidebar ();
-			TaskGui.instance.Show ();
-		} else
-			TaskGui.instance.Reset ();
+		panelSurveys.SetActive ( false );
+		SurveyGui.instance.Reset ();
+
+		panelTasks.SetActive ( true );
+		TaskGui.instance.Show ();
 	}
 
 	public void ShowManagers()

@@ -32,7 +32,7 @@ public class TaskGui : MonoBehaviour {
 	}
 
 	public void Show()
-	{ 
+	{  
 		if (AppController.instance.allTasks.Count == 0) {
 			ShowForm (); 
 		}
