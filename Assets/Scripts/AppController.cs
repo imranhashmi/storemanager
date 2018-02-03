@@ -26,9 +26,9 @@ public class AppController : MonoBehaviour {
 
 	public static AppController instance;  
 
-	public List<SurveyItem> allSurveys = new List<SurveyItem>();
-	public List<StoreItem> allStores = new List<StoreItem>();
-	public List<ManagerItem> allManagers = new List<ManagerItem>();
+	public List<Survey> allSurveys = new List<Survey>();
+	public List<Store> allStores = new List<Store>(	);
+	public List<Manager> allManagers = new List<Manager>();
 
 	public List<TaskItem> allTasks = new List<TaskItem>();
 
@@ -131,18 +131,20 @@ public class AppController : MonoBehaviour {
 		if (tg [1].isOn) {
 			ToggleSidebar ();
 			SurveyGui.instance.Show (); 
-		}
+		} else
+			SurveyGui.instance.Reset ();
 	}
 
 	// Child of Surveys
-	public void ShowTasks()
+	public void ShowTasks(List<Task> allTasks)
 	{
 		panelTasks.SetActive (tg[1].isOn);
 
 		if (tg [1].isOn) {
 			ToggleSidebar ();
 			TaskGui.instance.Show ();
-		}
+		} else
+			TaskGui.instance.Reset ();
 	}
 
 	public void ShowManagers()
@@ -152,7 +154,8 @@ public class AppController : MonoBehaviour {
 		if (tg [2].isOn) {
 			ToggleSidebar ();
 			ManagerGui.instance.Show ();
-		}
+		} else
+			ManagerGui.instance.Reset ();
 	}
 
 	public void ShowStores()
@@ -162,7 +165,8 @@ public class AppController : MonoBehaviour {
 		if (tg [3].isOn) {
 			ToggleSidebar ();		
 			StoreGui.instance.Show ();
-		}
+		} else
+			StoreGui.instance.Reset ();
 	}
 
 	public void ShowStats()
@@ -171,7 +175,7 @@ public class AppController : MonoBehaviour {
 
 		if (tg [4].isOn) {
 			ToggleSidebar ();
-		}
+		} 
 	} 
 	 
 	// Update is called once per frame

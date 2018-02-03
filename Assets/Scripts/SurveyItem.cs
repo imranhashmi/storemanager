@@ -29,9 +29,11 @@ public class SurveyItem : MonoBehaviour {
 	};
 
 	static int colorIndex = 0;
+	public Survey survey;
 
-	public void Setup(Survey t )
+ 	public void Setup(Survey t )
 	{
+		survey = t;
 
 		if (colorIndex < allColors.Length-1)
 			colorIndex++;
@@ -43,6 +45,11 @@ public class SurveyItem : MonoBehaviour {
 		date.text = t.date;
 		title.text = t.id.ToString();
 		comments.text = "";//t.manager.title;
+	} 
+
+	public void ConfirmSelected()
+	{
+		SurveyGui.instance.ItemSelected ();	
 	}
 
 	// Update is called once per frame

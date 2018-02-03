@@ -39,16 +39,32 @@ public class SurveyGui : MonoBehaviour {
 		else {
 			form.gameObject.SetActive (false);
 			addButton.gameObject.SetActive (true);
-			removeButton.gameObject.SetActive (false); 
-			foreach (SurveyItem t in AppController.instance.allSurveys) {
-				t.toggle.isOn = false;
-			}
+			removeButton.gameObject.SetActive (false);
+			Reset ();
+			StartCoroutine ("fillList");
 		}
 	}
 
-	public void Hide()
+	public void Reset()
 	{
-		
+		StopCoroutine ("fillList");
+		contentRect.transform.ClearChildren ();
+	}
+
+	IEnumerator fillList()
+	{		
+		foreach (Survey s in AppController.instance.allSurveys) { 
+			GameObject go = (GameObject)Instantiate (prefab);
+			go.transform.SetParent (contentRect.transform);
+			go.name = "Survey " + contentRect.childCount.ToString ();
+			go.SetActive (true);
+			SurveyItem item = go.GetComponent<SurveyItem> ();
+			item.Setup (s); 
+
+			updateContentRect ();
+
+			yield return new WaitForEndOfFrame ();
+		}
 	}
 
 	void updateContentRect()
@@ -70,13 +86,14 @@ public class SurveyGui : MonoBehaviour {
 		Survey survey = new Survey (){ date = date, title = title, manager = new Manager(), store = new Store() };
 
 		GameObject go = (GameObject)Instantiate (prefab);
-		go.transform.SetParent (prefab.transform.parent);
+		go.transform.SetParent (contentRect.transform);
+		go.name = "Survey " + contentRect.childCount.ToString ();
 		go.SetActive (true);
 		SurveyItem item = go.GetComponent<SurveyItem> ();
 		item.Setup (survey);
 
 		if ( AppController.instance.allSurveys != null )
-			AppController.instance.allSurveys.Add (item);
+			AppController.instance.allSurveys.Add (survey);
 
 		updateContentRect ();
 
@@ -95,29 +112,29 @@ public class SurveyGui : MonoBehaviour {
 		else {
 			// Delete any seleted item from list.
 			List<SurveyItem> toRemove = new List<SurveyItem>();
-			foreach (SurveyItem t in AppController.instance.allSurveys) {
+			for (int i = 0; i < contentRect.childCount; i++) {
+				SurveyItem t = contentRect.GetChild (i).GetComponent<SurveyItem> ();
 				if (t.toggle.isOn)
 					toRemove.Add (t);
-			}
+			} 
 
 			foreach (SurveyItem tt in toRemove) {
-				AppController.instance.allSurveys.Remove (tt);
+				AppController.instance.allSurveys.Remove (tt.survey);
 				DestroyImmediate (tt.gameObject);
 			}
 
-			ItemSelected ();
+			Show ();
 		}
 	} 
 
 	public void ItemSelected()
 	{
 		int howManySelected = 0;
-		foreach (SurveyItem t in AppController.instance.allSurveys) {
-
+		for (int i = 0; i < contentRect.childCount; i++) {
+			SurveyItem t = contentRect.GetChild (i).GetComponent<SurveyItem> ();
 			if (t.toggle.isOn)
 				howManySelected++;
-
-		}	
+		}  
 
 		if (howManySelected > 0) {
 			addButton.gameObject.SetActive (false);
