@@ -10,13 +10,4 @@ public class Store  {
 	public string address;
 	public string manager;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

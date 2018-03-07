@@ -10,13 +10,4 @@ public class Task {
 	public string description;
 	public string date;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

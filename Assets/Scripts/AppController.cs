@@ -23,7 +23,6 @@ public class AppController : MonoBehaviour {
 	public ToggleGroup sidebarToggles;
 	public Toggle[] tg;
 
-
 	public static AppController instance;  
 
 	public List<Survey> allSurveys = new List<Survey>();
@@ -36,14 +35,13 @@ public class AppController : MonoBehaviour {
 	{ 
 		panelHome.SetActive (false);
 		panelSurveys.SetActive (false);
-			panelTasks.SetActive (false);
+		panelTasks.SetActive (false);
 		panelStores.SetActive (false); 
 		panelManagers.SetActive (false); 
 		panelStats.SetActive (false);
 	}
 
 	void Awake(){
-
 		instance = this;
 
 		PanelFadeEffect.Duration = 0.1f;
@@ -64,6 +62,11 @@ public class AppController : MonoBehaviour {
 		StartCoroutine( OpenLogin() );
 
 	} 
+
+	// Update is called once per frame
+	void Update () {
+
+	}
 
 	IEnumerator OpenLogin()
 	{	
@@ -123,7 +126,6 @@ public class AppController : MonoBehaviour {
 		if (tg [0].isOn) {
 			ToggleSidebar ();
 		}
-
 	}
 
 	public void ShowSurveys()
@@ -131,13 +133,13 @@ public class AppController : MonoBehaviour {
 		panelSurveys.SetActive (tg[1].isOn);
 
 		panelTasks.SetActive ( false );
-		TaskGui.instance.Reset ();
+		TaskGui.Instance.Reset ();
 
 		if (tg [1].isOn) {
 			ToggleSidebar ();
-			SurveyGui.instance.Show (); 
+			SurveyGui.Instance.Show (allSurveys); 
 		} else {
-			SurveyGui.instance.Reset ();		
+			SurveyGui.Instance.Reset ();		
 		}
 	}
 
@@ -147,10 +149,10 @@ public class AppController : MonoBehaviour {
 		AppController.instance.allTasks = currentTasks;
 
 		panelSurveys.SetActive ( false );
-		SurveyGui.instance.Reset ();
+		SurveyGui.Instance.Reset ();
 
 		panelTasks.SetActive ( true );
-		TaskGui.instance.Show ();
+		TaskGui.Instance.Show (allTasks);
 	}
 
 	public void ShowManagers()
@@ -159,9 +161,9 @@ public class AppController : MonoBehaviour {
 
 		if (tg [2].isOn) {
 			ToggleSidebar ();
-			ManagerGui.instance.Show ();
+			ManagerGui.Instance.Show (allManagers);
 		} else
-			ManagerGui.instance.Reset ();
+			ManagerGui.Instance.Reset ();
 	}
 
 	public void ShowStores()
@@ -170,9 +172,9 @@ public class AppController : MonoBehaviour {
 
 		if (tg [3].isOn) {
 			ToggleSidebar ();		
-			StoreGui.instance.Show ();
+			StoreGui.Instance.Show (allStores);
 		} else
-			StoreGui.instance.Reset ();
+			StoreGui.Instance.Reset ();
 	}
 
 	public void ShowStats()
@@ -183,9 +185,5 @@ public class AppController : MonoBehaviour {
 			ToggleSidebar ();
 		} 
 	} 
-	 
-	// Update is called once per frame
-	void Update () {
-			
-	}
+	  
 }

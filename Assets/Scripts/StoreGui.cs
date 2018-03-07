@@ -3,90 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StoreGui : MonoBehaviour {
-
-	public static StoreGui instance;
-
- 	public RectTransform contentRect;
-	public GameObject prefab;
-	public StoreForm form;
-
-	public Button addButton;
-	public Button removeButton;
-
-	void Awake()
-	{
-		instance = this;
-		addButton.gameObject.SetActive (false);
-		removeButton.gameObject.SetActive (false);
-	}
-
-	// Use this for initialization
-	void Start () {
-
-	}
-
-	// Update is called once per frame
-	void Update () {
-
-	} 
-
-	public void Show()
-	{ 
-		if (AppController.instance.allStores.Count == 0) {
-			ShowForm (); 
-		}
-		else {
-			form.gameObject.SetActive (false);
-			addButton.gameObject.SetActive (true);
-			removeButton.gameObject.SetActive (false); 
-			Reset ();
-			StartCoroutine ("fillList");
-		}
-	}
-
-	public void Reset()
-	{
-		StopCoroutine ("fillList");
-		contentRect.transform.ClearChildren ();
-	}
-
-	IEnumerator fillList()
-	{		
-		foreach (Store s in AppController.instance.allStores) { 
-			GameObject go = (GameObject)Instantiate (prefab);
-			go.transform.SetParent (contentRect.transform);
-			go.name = "Store " + contentRect.childCount.ToString ();
-			go.transform.localScale = new Vector3 (1f, 1f, 1f);
-			go.SetActive (true);
-
-			if (s.title.IsNullOrEmpty ())
-				s.title = go.name;
-			
-			StoreItem item = go.GetComponent<StoreItem> ();
-			item.Setup (s); 
-
-			updateContentRect ();
-
-			yield return new WaitForEndOfFrame ();
-		}
-	}
-
-	void updateContentRect()
-	{
-		RectTransform t = contentRect.GetComponent<RectTransform>();
-		float contentSizeY = contentRect.childCount * prefab.GetComponent<RectTransform> ().sizeDelta.y;
-		t.sizeDelta = new Vector2(t.sizeDelta.x, contentSizeY);
-	}
-
-	public void ShowForm()
-	{
-		form.gameObject.SetActive (true);
-		addButton.gameObject.SetActive (false);
-		removeButton.gameObject.SetActive (true);
-	}
-
-	public void AddItem(string date, string title, string comments)
+public class StoreGui : BasicListGui<Store> {
+	
+	public override void AddItem(string date, string title, string comments)
 	{
 		Store store = new Store (){  manager = date, title = title, address = comments };
 
@@ -112,7 +31,7 @@ public class StoreGui : MonoBehaviour {
 		removeButton.gameObject.SetActive (false);
 	}
 
-	public void DeleteItem()
+	public override void DeleteItem()
 	{
 		if (form.gameObject.activeSelf) {
 			form.gameObject.SetActive (false);
@@ -129,22 +48,20 @@ public class StoreGui : MonoBehaviour {
 			}
 
 			foreach (StoreItem tt in toRemove) {
-				AppController.instance.allStores.Remove (tt.store);
+				AppController.instance.allStores.Remove (tt.item);
 				DestroyImmediate (tt.gameObject);
 			}
-
-			Show ();
+			Show (AppController.instance.allStores);
 		}
 	} 
 
-	public void ItemSelected()
+	public override void ItemSelected()
 	{
 		int howManySelected = 0;
 		for (int i = 0; i < contentRect.childCount; i++) {
 			StoreItem t = contentRect.GetChild (i).GetComponent<StoreItem> ();
 			if (t.toggle.isOn)
 				howManySelected++;
-
 		}	
 
 		if (howManySelected > 0) {

@@ -11,15 +11,12 @@ public class Survey {
 	public string comments;
 	public Store store;
 	public Manager manager;
-	public List<Task> allTasks = new List<Task>();
+	public List<Task> allTasks;
 
-	// Use this for initialization
-	void Start () {
-		
+	public Survey(){
+		store = new Store();
+		manager = new Manager();
+		allTasks = new List<Task>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 }

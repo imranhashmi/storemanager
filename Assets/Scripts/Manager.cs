@@ -12,13 +12,4 @@ public class Manager {
 	public string phone;
 	public string email;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

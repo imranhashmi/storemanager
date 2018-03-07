@@ -128,12 +128,7 @@ public static class UTILES  {
 			if(ch >= '\u0627' && ch <= '\u0649')
 				return true;
 		return false;
-	}
-	
-	public static string ToArabic(this string inStr)
-	{
-	    return CharSetControl.fixArabicSymbols(inStr);
-	}		
+	}			
 	
 	public static string FlipWords(this string inStr)
 	{

@@ -3,62 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SurveyItem : MonoBehaviour {
+public class SurveyItem : BasicItem<Survey> {
 
-	public Toggle toggle;
-	public Image bookmark;	
-	public Text date;
-	public Text title;
-	public Text comments;
-
-	// Use this for initialization
-	void Start () {
-
-	}
-	static Color[] allColors = {
-		Color.black,
-		Color.blue,
-		Color.cyan,
-		Color.gray,
-		Color.green,
-		Color.grey,
-		Color.magenta,
-		Color.red,
-		Color.white,
-		Color.yellow,
-	};
-
-	static int colorIndex = 0;
-	public Survey survey;
-
- 	public void Setup(Survey t )
+	public override void Setup(Survey t )
 	{
-		survey = t;
-
-		if (colorIndex < allColors.Length-1)
-			colorIndex++;
-		else
-			colorIndex = 0;
-
-		bookmark.color = allColors [colorIndex]; 
+		base.Setup(t);
 
 		date.text = t.date;
 		title.text = t.title;
 		comments.text = t.comments;
 	} 
 
-	public void ConfirmSelected()
+	public override void ConfirmSelected()
 	{
-		SurveyGui.instance.ItemSelected ();	
+		base.ConfirmSelected();
+
+		SurveyGui.Instance.ItemSelected ();	
 	}
 
-	public void Edit()
+	public override void Edit()
 	{
-		AppController.instance.ShowTasks (survey.allTasks);
-	}
+		base.Edit();
 
-	// Update is called once per frame
-	void Update () {
-
-	}
+		AppController.instance.ShowTasks (item.allTasks);
+	} 
+	 
 }
