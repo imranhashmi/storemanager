@@ -46,14 +46,13 @@ public class AppController : MonoBehaviour {
 	void Awake(){
 		instance = this;
 
-		PanelFadeEffect.Duration = 0.1f;
-
 		disableAllPanels ();
 
 		panelSplash.SetActive (false);
 		panelLogin.SetActive (false);
 		panelTop.SetActive (false);
-		panelSidebar.SetActive (false);
+
+		//sidebarAnimator.SetTrigger("SlideOut");	// We hide the sidebar in scene before running the app
 		sidebarOpened = false; 		
  	}
 
@@ -102,11 +101,11 @@ public class AppController : MonoBehaviour {
 	public void OnLogout()
 	{	
 		panelTop.SetActive (false);
-		panelSidebar.SetActive (false);
+
+		sidebarAnimator.SetTrigger("SlideOut");
 		sidebarOpened = false;
 
-		foreach (Toggle t in tg)
-			t.isOn = false;
+		sidebarToggles.SetAllTogglesOff();
 
 		username.text = "";
 		password.text = "";
@@ -114,11 +113,12 @@ public class AppController : MonoBehaviour {
 		panelLogin.SetActive (true);
 	}
 
+	public Animator sidebarAnimator;
  	bool sidebarOpened = false;
 	public void ToggleSidebar()
 	{
 		sidebarOpened = !sidebarOpened;
-		panelSidebar.SetFadeEnable (sidebarOpened); 
+		sidebarAnimator.SetTrigger(sidebarOpened?"SlideIn":"SlideOut");
 	}
 
 	public void ShowHome()
