@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using DataModels;
+
 public class TaskItem : BasicItem<Task> { 
 
 	public override void Setup(Task t )

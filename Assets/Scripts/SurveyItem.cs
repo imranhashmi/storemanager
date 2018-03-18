@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using DataModels;
+
 public class SurveyItem : BasicItem<Survey> {
 
 	public override void Setup(Survey t )

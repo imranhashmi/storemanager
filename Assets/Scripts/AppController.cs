@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using DataModels;
+
 public class AppController : MonoBehaviour {
 
 	public GameObject panelSplash;
@@ -88,7 +90,7 @@ public class AppController : MonoBehaviour {
 			panelTop.SetActive(true);
 			panelHome.SetActive (true);
 			topTitle.text = "Home";
-			//tg [0].isOn = true;
+			tg [0].isOn = true;
 
 		} else {
 

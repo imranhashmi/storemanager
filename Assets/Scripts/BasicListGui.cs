@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using DataModels;
+
 public class BasicListGui<T>: MonoBehaviour {
 
 	private static BasicListGui<T> instance = null;

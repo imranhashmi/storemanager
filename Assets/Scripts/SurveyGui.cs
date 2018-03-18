@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using DataModels;
+
 public class SurveyGui : BasicListGui<Survey> { 
 	
 	public override void AddItem( string date, string title, string comments )

@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using DataModels;
+
 public class StoreItem : BasicItem<Store> { 
 
 	public override void Setup(Store t )
