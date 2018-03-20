@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 using DataModels;
 
-public class BasicListGui<T>: MonoBehaviour {
+public abstract class BasicListGui<T>: MonoBehaviour {
 
 	private static BasicListGui<T> instance = null;
 	public static BasicListGui<T> Instance {
